@@ -78,18 +78,18 @@ namespace rh.Migrations
                     NumeroFixe = table.Column<string>(nullable: true),
                     NumeroPortable = table.Column<string>(nullable: true),
                     Prenom = table.Column<string>(nullable: true),
-                    ServiceID = table.Column<int>(nullable: true),
+                    ServiceId = table.Column<int>(nullable: false),
                     Ville = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Collaborateur", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Collaborateur_Service_ServiceID",
-                        column: x => x.ServiceID,
+                        name: "FK_Collaborateur_Service_ServiceId",
+                        column: x => x.ServiceId,
                         principalTable: "Service",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,18 +112,18 @@ namespace rh.Migrations
                     Restaurant = table.Column<decimal>(nullable: false),
                     TauxDevise = table.Column<decimal>(nullable: false),
                     TaxiBus = table.Column<decimal>(nullable: false),
-                    TypeDepenseID = table.Column<int>(nullable: true),
+                    TypeDepenseId = table.Column<int>(nullable: false),
                     VilleClient = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Depense", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Depense_TypeDepense_TypeDepenseID",
-                        column: x => x.TypeDepenseID,
+                        name: "FK_Depense_TypeDepense_TypeDepenseId",
+                        column: x => x.TypeDepenseId,
                         principalTable: "TypeDepense",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,7 +132,7 @@ namespace rh.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CollaborateurID = table.Column<int>(nullable: true),
+                    CollaborateurId = table.Column<int>(nullable: false),
                     Commentaire = table.Column<string>(nullable: true),
                     DateDebut = table.Column<DateTime>(nullable: false),
                     DateDemande = table.Column<DateTime>(nullable: false),
@@ -142,23 +142,23 @@ namespace rh.Migrations
                     PeriodeDebut = table.Column<char>(nullable: false),
                     PeriodeFin = table.Column<char>(nullable: false),
                     PrenomResponsable = table.Column<string>(nullable: true),
-                    TypeCongeID = table.Column<int>(nullable: true)
+                    TypeCongeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Conge", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Conge_Collaborateur_CollaborateurID",
-                        column: x => x.CollaborateurID,
+                        name: "FK_Conge_Collaborateur_CollaborateurId",
+                        column: x => x.CollaborateurId,
                         principalTable: "Collaborateur",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Conge_TypeConge_TypeCongeID",
-                        column: x => x.TypeCongeID,
+                        name: "FK_Conge_TypeConge_TypeCongeId",
+                        column: x => x.TypeCongeId,
                         principalTable: "TypeConge",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -167,57 +167,57 @@ namespace rh.Migrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    CollaborateurId = table.Column<int>(nullable: false),
                     DateDebut = table.Column<DateTime>(nullable: false),
                     DateFin = table.Column<DateTime>(nullable: false),
-                    TypeContratID = table.Column<int>(nullable: true),
-                    collaborateurID = table.Column<int>(nullable: true)
+                    TypeContratId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contrat", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Contrat_TypeContrat_TypeContratID",
-                        column: x => x.TypeContratID,
-                        principalTable: "TypeContrat",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contrat_Collaborateur_collaborateurID",
-                        column: x => x.collaborateurID,
+                        name: "FK_Contrat_Collaborateur_CollaborateurId",
+                        column: x => x.CollaborateurId,
                         principalTable: "Collaborateur",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contrat_TypeContrat_TypeContratId",
+                        column: x => x.TypeContratId,
+                        principalTable: "TypeContrat",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Collaborateur_ServiceID",
+                name: "IX_Collaborateur_ServiceId",
                 table: "Collaborateur",
-                column: "ServiceID");
+                column: "ServiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Conge_CollaborateurID",
+                name: "IX_Conge_CollaborateurId",
                 table: "Conge",
-                column: "CollaborateurID");
+                column: "CollaborateurId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Conge_TypeCongeID",
+                name: "IX_Conge_TypeCongeId",
                 table: "Conge",
-                column: "TypeCongeID");
+                column: "TypeCongeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contrat_TypeContratID",
+                name: "IX_Contrat_CollaborateurId",
                 table: "Contrat",
-                column: "TypeContratID");
+                column: "CollaborateurId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contrat_collaborateurID",
+                name: "IX_Contrat_TypeContratId",
                 table: "Contrat",
-                column: "collaborateurID");
+                column: "TypeContratId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Depense_TypeDepenseID",
+                name: "IX_Depense_TypeDepenseId",
                 table: "Depense",
-                column: "TypeDepenseID");
+                column: "TypeDepenseId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -235,10 +235,10 @@ namespace rh.Migrations
                 name: "TypeConge");
 
             migrationBuilder.DropTable(
-                name: "TypeContrat");
+                name: "Collaborateur");
 
             migrationBuilder.DropTable(
-                name: "Collaborateur");
+                name: "TypeContrat");
 
             migrationBuilder.DropTable(
                 name: "TypeDepense");

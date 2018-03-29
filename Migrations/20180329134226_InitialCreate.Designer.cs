@@ -11,7 +11,7 @@ using System;
 namespace rh.Migrations
 {
     [DbContext(typeof(RhContext))]
-    [Migration("20180329125527_InitialCreate")]
+    [Migration("20180329134226_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,13 +49,13 @@ namespace rh.Migrations
 
                     b.Property<string>("Prenom");
 
-                    b.Property<int?>("ServiceID");
+                    b.Property<int>("ServiceId");
 
                     b.Property<string>("Ville");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ServiceID");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Collaborateur");
                 });
@@ -65,7 +65,7 @@ namespace rh.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CollaborateurID");
+                    b.Property<int>("CollaborateurId");
 
                     b.Property<string>("Commentaire");
 
@@ -85,13 +85,13 @@ namespace rh.Migrations
 
                     b.Property<string>("PrenomResponsable");
 
-                    b.Property<int?>("TypeCongeID");
+                    b.Property<int>("TypeCongeId");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CollaborateurID");
+                    b.HasIndex("CollaborateurId");
 
-                    b.HasIndex("TypeCongeID");
+                    b.HasIndex("TypeCongeId");
 
                     b.ToTable("Conge");
                 });
@@ -101,19 +101,19 @@ namespace rh.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CollaborateurId");
+
                     b.Property<DateTime>("DateDebut");
 
                     b.Property<DateTime>("DateFin");
 
-                    b.Property<int?>("TypeContratID");
-
-                    b.Property<int?>("collaborateurID");
+                    b.Property<int>("TypeContratId");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TypeContratID");
+                    b.HasIndex("CollaborateurId");
 
-                    b.HasIndex("collaborateurID");
+                    b.HasIndex("TypeContratId");
 
                     b.ToTable("Contrat");
                 });
@@ -151,13 +151,13 @@ namespace rh.Migrations
 
                     b.Property<decimal>("TaxiBus");
 
-                    b.Property<int?>("TypeDepenseID");
+                    b.Property<int>("TypeDepenseId");
 
                     b.Property<string>("VilleClient");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TypeDepenseID");
+                    b.HasIndex("TypeDepenseId");
 
                     b.ToTable("Depense");
                 });
@@ -214,36 +214,42 @@ namespace rh.Migrations
                 {
                     b.HasOne("rh.Models.Service", "Service")
                         .WithMany("Collaborateurs")
-                        .HasForeignKey("ServiceID");
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("rh.Models.Conge", b =>
                 {
                     b.HasOne("rh.Models.Collaborateur", "Collaborateur")
-                        .WithMany()
-                        .HasForeignKey("CollaborateurID");
+                        .WithMany("Conges")
+                        .HasForeignKey("CollaborateurId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("rh.Models.TypeConge", "TypeConge")
                         .WithMany("Conges")
-                        .HasForeignKey("TypeCongeID");
+                        .HasForeignKey("TypeCongeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("rh.Models.Contrat", b =>
                 {
+                    b.HasOne("rh.Models.Collaborateur", "Collaborateur")
+                        .WithMany("Contrats")
+                        .HasForeignKey("CollaborateurId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("rh.Models.TypeContrat", "TypeContrat")
                         .WithMany("Contrats")
-                        .HasForeignKey("TypeContratID");
-
-                    b.HasOne("rh.Models.Collaborateur", "collaborateur")
-                        .WithMany()
-                        .HasForeignKey("collaborateurID");
+                        .HasForeignKey("TypeContratId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("rh.Models.Depense", b =>
                 {
                     b.HasOne("rh.Models.TypeDepense", "TypeDepense")
                         .WithMany("Depenses")
-                        .HasForeignKey("TypeDepenseID");
+                        .HasForeignKey("TypeDepenseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

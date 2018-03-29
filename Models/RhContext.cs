@@ -18,6 +18,11 @@ namespace rh.Models
         public DbSet<rh.Models.Depense> Depense { get; set; }
         public DbSet<rh.Models.TypeDepense> TypeDepense { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=rh.db");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Collaborateur>()
