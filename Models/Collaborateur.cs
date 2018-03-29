@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace rh.Models
 {
@@ -18,6 +19,12 @@ namespace rh.Models
         public string NumeroPortable { get; set; }
         public string Email { get; set; }
         public string NoSecu { get; set; }
+        
+        public ICollection<Contrat> Contrats { get; set; }
+
+        public ICollection<Conge> Conges { get; set; }
+
+        public int ServiceId { get; set; }
         public Service Service { get; set; }
     }
 }

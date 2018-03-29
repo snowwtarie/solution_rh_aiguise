@@ -20,6 +20,8 @@ namespace rh.Models
         public decimal TauxDevise { get; set; }
         public string Commentaire { get; set; }
         public string CommentaireRefus { get; set; }
+
+        public int TypeDepenseId { get; set; }
         public TypeDepense TypeDepense { get; set; }
     }
 }
