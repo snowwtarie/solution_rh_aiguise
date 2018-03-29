@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace rh.Models
 {
@@ -6,5 +7,6 @@ namespace rh.Models
     {
         public int ID { get; set; }
         public string Label { get; set; }
+        public ICollection<Collaborateur> Collaborateurs { get; set; }
     }
 }
