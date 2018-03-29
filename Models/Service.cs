@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace rh.Models
 {
-    public class Services
+    public class Service
     {
         public int ID { get; set; }
         public string Label { get; set; }

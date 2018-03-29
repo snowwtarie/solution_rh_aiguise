@@ -2,7 +2,7 @@ using System;
 
 namespace rh.Models
 {
-    public class Depenses
+    public class Depense
     {
         public int ID { get; set; }
         public DateTime DateDepense { get; set; }
@@ -20,6 +20,6 @@ namespace rh.Models
         public decimal TauxDevise { get; set; }
         public string Commentaire { get; set; }
         public string CommentaireRefus { get; set; }
-        public TypeDepenses TypeDepense { get; set; }
+        public TypeDepense TypeDepense { get; set; }
     }
 }

@@ -2,11 +2,11 @@ using System;
 
 namespace rh.Models
 {
-    public class Conges
+    public class Conge
     {
         public int ID { get; set; }
         public Collaborateur Collaborateur { get; set; }
-        public TypeConges TypeConge { get; set; }
+        public TypeConge TypeConge { get; set; }
         public DateTime DateDebut { get; set; }
         public DateTime DateFin { get; set; }
         public char PeriodeDebut { get; set; }

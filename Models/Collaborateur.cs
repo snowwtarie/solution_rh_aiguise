@@ -18,6 +18,6 @@ namespace rh.Models
         public string NumeroPortable { get; set; }
         public string Email { get; set; }
         public string NoSecu { get; set; }
-        public Services Service { get; set; }
+        public Service Service { get; set; }
     }
 }
