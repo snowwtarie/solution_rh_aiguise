@@ -46,11 +46,32 @@ namespace rh.Controllers
         }
 
         // GET: Conges/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CollaborateurId"] = new SelectList(_context.Collaborateur, "ID", "ID");
-            ViewData["TypeCongeId"] = new SelectList(_context.TypeConge, "ID", "ID");
-            return View();
+            IQueryable<Collaborateur> collQuery = from c in _context.Collaborateur
+                                                  orderby c.ID
+                                                  select c;
+
+            CongeCollaborateurViewModel collCongesVM = new CongeCollaborateurViewModel();
+            collCongesVM.Collaborateurs =  new List<SelectListItem>();
+
+            foreach(var c in await collQuery.Distinct().ToListAsync())
+            {
+                collCongesVM.Collaborateurs.Add(new SelectListItem { Value = c.ID.ToString(), Text = c.ToString() });
+            }
+
+            IQueryable<TypeConge> tcQuery = from tc in _context.TypeConge
+                                                  orderby tc.ID
+                                                  select tc;
+
+            collCongesVM.TypeConges =  new List<SelectListItem>();
+
+            foreach(var tc in await tcQuery.Distinct().ToListAsync())
+            {
+                collCongesVM.TypeConges.Add(new SelectListItem { Value = tc.ID.ToString(), Text = tc.ToString() });
+            }
+
+            return View(collCongesVM);
         }
 
         // POST: Conges/Create
@@ -66,8 +87,7 @@ namespace rh.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CollaborateurId"] = new SelectList(_context.Collaborateur, "ID", "ID", conge.CollaborateurId);
-            ViewData["TypeCongeId"] = new SelectList(_context.TypeConge, "ID", "ID", conge.TypeCongeId);
+
             return View(conge);
         }
 

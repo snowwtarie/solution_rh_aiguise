@@ -1,78 +1,87 @@
-@model rh.Models.Conge
+@model rh.Models.CongeCollaborateurViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Demande de congés";
 }
 
-<h2>Create</h2>
-
-<h4>Conge</h4>
+<h4>Demande de congés</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<form asp-action="Create">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="TypeConges" class="control-label"></label>
+                <select asp-for="TypeConge" class ="form-control" asp-items="Model.TypeConges" name="TypeCongeId"></select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Collaborateur" class="control-label"></label>
+                <select asp-for="Collaborateur" class ="form-control" asp-items="Model.Collaborateurs" name="CollaborateurId"></select>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DateDebut" class="control-label"></label>
-                <input asp-for="DateDebut" class="form-control" />
+                <input asp-for="DateDebut" class="form-control" value=@DateTime.Now.ToString("yyyy-MM-dd") />
                 <span asp-validation-for="DateDebut" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="PeriodeDebut" class="control-label"></label>
+                <select name="PeriodeDebut" class="form-control">
+                    <option value="M">Matin</option>
+                    <option value="A">Après-midi</option>
+                    <option value="J">Journée</option>
+                </select>
+                <span asp-validation-for="PeriodeDebut" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
                 <label asp-for="DateFin" class="control-label"></label>
-                <input asp-for="DateFin" class="form-control" />
+                <input asp-for="DateFin" class="form-control" value=@DateTime.Now.ToString("yyyy-MM-dd") />
                 <span asp-validation-for="DateFin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PeriodeDebut" class="control-label"></label>
-                <input asp-for="PeriodeDebut" class="form-control" />
-                <span asp-validation-for="PeriodeDebut" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="PeriodeFin" class="control-label"></label>
-                <input asp-for="PeriodeFin" class="form-control" />
+                <select name="PeriodeFin" class="form-control">
+                    <option value="M">Matin</option>
+                    <option value="A">Après-midi</option>
+                    <option value="J">Journée</option>
+                </select>
                 <span asp-validation-for="PeriodeFin" class="text-danger"></span>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="Commentaire" class="control-label"></label>
                 <input asp-for="Commentaire" class="form-control" />
                 <span asp-validation-for="Commentaire" class="text-danger"></span>
             </div>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="DateDemande" class="control-label"></label>
-                <input asp-for="DateDemande" class="form-control" />
+                <input asp-for="DateDemande" class="form-control" value=@DateTime.Now.ToString("yyyy-MM-dd") />
                 <span asp-validation-for="DateDemande" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="NomResponsable" class="control-label"></label>
-                <input asp-for="NomResponsable" class="form-control" />
-                <span asp-validation-for="NomResponsable" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrenomResponsable" class="control-label"></label>
-                <input asp-for="PrenomResponsable" class="form-control" />
-                <span asp-validation-for="PrenomResponsable" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Decision" /> @Html.DisplayNameFor(model => model.Decision)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeCongeId" class="control-label"></label>
-                <select asp-for="TypeCongeId" class ="form-control" asp-items="ViewBag.TypeCongeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="CollaborateurId" class="control-label"></label>
-                <select asp-for="CollaborateurId" class ="form-control" asp-items="ViewBag.CollaborateurId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <hr />
+    <div class="row">
+        <div class="form-group">
+            <input type="submit" value="Valider demande" class="btn btn-default" />
+        </div>
+    </div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>

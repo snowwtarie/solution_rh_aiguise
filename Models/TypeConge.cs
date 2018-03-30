@@ -8,5 +8,10 @@ namespace rh.Models
         public int ID { get; set; }
         public string Label { get; set; }
         public ICollection<Conge> Conges { get; set; }
+
+        public override string ToString()
+        {
+            return this.Label;
+        }
     }
 }
